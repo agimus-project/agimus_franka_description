@@ -6,7 +6,7 @@
              robot_ip
              use_fake_hardware:=^|false
              fake_sensor_commands:=^|false
-             franka_controllers_params:='default'
+             franka_controllers_params:=''
              gazebo:=^|false
              hand:=^|false
              gazebo_effort:=^|false

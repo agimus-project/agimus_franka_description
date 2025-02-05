@@ -6,7 +6,7 @@
                       kinematics
                       inertials
                       dynamics
-                      franka_controllers_params='invalid'
+                      franka_controllers_params=''
                       parent:='world'
                       xyz:='0 0 0'
                       rpy:='0 0 0'

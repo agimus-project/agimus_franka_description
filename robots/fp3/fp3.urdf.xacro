@@ -11,6 +11,7 @@
   <xacro:arg name="arm_id" default="fp3" />
 
   <!-- Path to controller configuration when using Gazebo -->
+  <!-- Default to "$(find franka_gazebo_bringup)/config/franka_gazebo_controllers.yaml" -->
   <xacro:arg name="franka_controllers_params" default="" />
   
   <!-- Don't print a prefix for joints, visuals, and links? -->

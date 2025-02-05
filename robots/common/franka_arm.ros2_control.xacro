@@ -96,9 +96,13 @@
            </xacro:unless>
            <ros>
             <remapping>/joint_states:=/franka/joint_states</remapping>
-            <remapping>/gripper_action_controller/gripper_cmd/_action/feedback:=/franka_gripper_node/gripper_action/_action/feedback</remapping>
-            <remapping>/gripper_action_controller/gripper_cmd/_action/status:=/franka_gripper_node/gripper_action/_action/status</remapping>
-            <remapping>/gripper_action_controller/transition_event:=/franka_gripper_node/transition_event</remapping>
+            <!-- Remapping of actions doesn't seem to work all that well so we need to map every topic and service manually -->
+            <!-- Solved in https://github.com/ros2/rcl/pull/1170 but was not backported to humble and not even to jazzy -->
+            <remapping>/gripper_action_controller/gripper_cmd/_action/feedback:=/${arm_id}_gripper/gripper_action/_action/feedback</remapping>
+            <remapping>/gripper_action_controller/gripper_cmd/_action/status:=/${arm_id}_gripper/gripper_action/_action/status</remapping>
+            <remapping>/gripper_action_controller/gripper_cmd/_action/cancel_goal:=/${arm_id}_gripper/gripper_action/_action/cancel_goal</remapping>
+            <remapping>/gripper_action_controller/gripper_cmd/_action/get_result:=/${arm_id}_gripper/gripper_action/_action/get_result</remapping>
+            <remapping>/gripper_action_controller/gripper_cmd/_action/send_goal:=/${arm_id}_gripper/gripper_action/_action/send_goal</remapping>
           </ros>
         </plugin>
       </gazebo>

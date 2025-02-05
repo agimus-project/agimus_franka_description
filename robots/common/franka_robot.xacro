@@ -6,7 +6,7 @@
                       kinematics
                       inertials
                       dynamics
-                      franka_controllers_params='$(find franka_gazebo_bringup)/config/franka_gazebo_controllers.yaml'
+                      franka_controllers_params=''
                       parent:='world'
                       xyz:='0 0 0'
                       rpy:='0 0 0'

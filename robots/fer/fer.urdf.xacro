@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fer">
 
   <xacro:include filename="$(find franka_description)/robots/common/franka_robot.xacro"/>
+  <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.urdf.xacro" />
 
   <!--
     DEPRECATION NOTICE
@@ -49,6 +50,9 @@
   <!-- For a multi arm setup, we need a threaded robot running async-->
   <xacro:arg name="multi_arm" default="false" />
 
+  <!-- IP address or hostname of the force-torque sensor" -->
+  <xacro:arg name="ft_sensor_ip" default="" />
+
   <xacro:franka_robot arm_id="fer"
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fer/joint_limits.yaml')}"
                       inertials="${xacro.load_yaml('$(find franka_description)/robots/fer/inertials.yaml')}"
@@ -68,4 +72,17 @@
                       arm_prefix= ""
                       connected_to= "base">
   </xacro:franka_robot>
+
+  <!-- ATI sensors have sampling rate as 7000 divided by an integer -->
+  <!-- Dividing by 3 is the closest to 2 times 1000 Hz which is the -->
+  <!-- control frequency of Panda -->
+  <xacro:property name="rdt_sampling_rate" value="${int(7000 / 3)}" />
+  <xacro:ati_mini45 parent_link="fer_link8"
+                    prefix=""
+                    ip_address="$(arg ft_sensor_ip)"
+                    rdt_sampling_rate="${rdt_sampling_rate}"
+                    internal_filter_rate="0"
+                    use_hardware_biasing="false"
+                    sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/ft_sensors/inertials.yaml')}">
+  </xacro:ati_mini45>
 </robot>

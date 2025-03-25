@@ -22,7 +22,8 @@
                       no_prefix:='false'
                       arm_prefix:=''
                       connected_to:='base'
-                      multi_arm:=false">
+                      multi_arm:=false"
+                      >
     <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" />
 
     <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
@@ -94,6 +95,56 @@
         with_sc="${with_sc}"
       />
     </xacro:if>
+
+    <!-- D435 camera -->
+    <!-- TODO: pass location of calibrated-params -->
+    <xacro:property name="camera_pose_file"
+                    value="$(find franka_description)/robots/${arm_id}/calibrated-params.yaml" />
+    <xacro:property name="camera_pose" value="${xacro.load_yaml(camera_pose_file)}"/>
+
+    <link name="${arm_id}_ref_camera_link"/>
+    <joint name="${arm_id}_ref_camera_joint" type="fixed">
+      <parent link="${arm_id}_hand"/>
+      <child link="${arm_id}_ref_camera_link"/>
+      <origin xyz="${camera_pose['camera']['x']}
+                    ${camera_pose['camera']['y']}
+                    ${camera_pose['camera']['z']}"
+        rpy="${camera_pose['camera']['roll']}
+                    ${camera_pose['camera']['pitch']}
+                    ${camera_pose['camera']['yaw']}"/>
+    </joint>
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+
+    <xacro:sensor_d435 parent="${arm_id}_ref_camera_link" name="camera" use_nominal_extrinsics="true">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:sensor_d435>
+
+    <!-- camera support -->
+    <link name="${arm_id}_camera_support_link">
+      <inertial>
+        <mass value="0.010"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.022 0 -0.012" rpy="3.141592653589793 0 -1.5707963267948966"/>
+        <geometry>
+          <mesh filename="$(find franka_description)/meshes/camera-support.stl" scale="1 1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.022 0 -0.012" rpy="3.141592653589793 0 -1.5707963267948966"/>
+        <geometry>
+          <mesh filename="$(find franka_description)/meshes/camera-support.stl" scale="1 1 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${arm_id}_camera_support_joint" type="fixed">
+      <parent link="${arm_id}_hand"/>
+      <child link="${arm_id}_camera_support_link"/>
+      <origin xyz="0 0 0" rpy="3.141592653589793 0 0"/>
+    </joint>
+
 
     <!-- Definition of additional Gazebo tags -->
     <xacro:if value="${gazebo}">

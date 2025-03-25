@@ -131,7 +131,7 @@
       <visual>
         <origin xyz="0.022 0 -0.012" rpy="3.141592653589793 0 -1.5707963267948966"/>
         <geometry>
-          <mesh filename="file://$(find franka_description)/meshes/camera-support.stl" scale="1 1 1"/>
+          <mesh filename="package://franka_description/meshes/camera-support.stl" />
         </geometry>
         <material name="camera_support">
           <color rgba="0 0.0 0.0 1.0"/>
@@ -140,7 +140,7 @@
       <collision>
         <origin xyz="0.022 0 -0.012" rpy="3.141592653589793 0 -1.5707963267948966"/>
         <geometry>
-          <mesh filename="file://$(find franka_description)/meshes/camera-support.stl" scale="1 1 1"/>
+          <mesh filename="package://franka_description/meshes/camera-support.stl" />
         </geometry>
       </collision>
     </link>

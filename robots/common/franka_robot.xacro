@@ -115,7 +115,9 @@
     </joint>
     <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
 
-    <xacro:sensor_d435 parent="${arm_id}_ref_camera_link" name="camera" use_nominal_extrinsics="true">
+    <!-- use_mesh="true" produces an error when visualizing with rviz2
+    because the generated urdf contains mesh filename paths that do not start with file:// -->
+    <xacro:sensor_d435 parent="${arm_id}_ref_camera_link" name="camera" use_nominal_extrinsics="true" use_mesh="false">
       <origin xyz="0 0 0" rpy="0 0 0"/>
     </xacro:sensor_d435>
 

@@ -10,7 +10,7 @@
     <xacro:property name="length" value="0.0327" />
     <xacro:property name="ee_inertials" value="${sensor_inertials}" />
 
-    <joint name="${prefix}hand_joint" type="fixed">
+    <joint name="${prefix}ati_mini45_base_joint" type="fixed">
       <parent link="${parent_link}" />
       <child link="${prefix}ati_mini45" />
       <origin xyz="${xyz_sensor}" rpy="${rpy_sensor}" />

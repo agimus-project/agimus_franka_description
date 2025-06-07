@@ -2,8 +2,10 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="ati_mini45">
   <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
   <xacro:include filename="$(find franka_description)/end_effectors/common/ee_with_one_link.xacro" />
+  <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro"/>
+
   <xacro:macro name="ati_mini45"
-    params="prefix parent_link rpy_sensor:='0 0 0' xyz_sensor:='0 0 0' ip_address rdt_sampling_rate internal_filter_rate use_hardware_biasing sensor_inertials safety_distance:=0 gazebo:=false description_pkg:=franka_description with_sc:=false">
+    params="prefix parent_link rpy_sensor:='0 0 0' xyz_sensor:='0 0 0' ip_address rdt_sampling_rate internal_filter_rate use_hardware_biasing sensor_inertials safety_distance:=0 gazebo:=false description_pkg:=franka_description with_sc:=false measurement_frame_name:='ati_mini45_measurement_reference'">
 
     <!-- length and radius of the sensor with mounting plates -->
     <xacro:property name="radius" value="0.0315" />
@@ -58,21 +60,22 @@
 
     <link name="${prefix}ati_mini45_tool_mount" />
 
-    <joint name="${prefix}ati_mini45_measurement_reference_joint" type="fixed">
+    <joint name="${measurement_frame_name}_joint" type="fixed">
       <parent link="${prefix}ati_mini45" />
-      <child link="${prefix}ati_mini45_measurement_reference" />
-      <origin xyz="0 0 ${length / 2}" rpy="0 0 0" />
+      <child link="${measurement_frame_name}" />
+      <origin xyz="0 0 ${length / 2}" rpy="${pi} 0.0 ${pi / 3 * 2}" />
     </joint>
 
-    <link name="${prefix}ati_mini45_measurement_reference" />
+    <link name="${measurement_frame_name}" />
 
-    <xacro:include filename="$(find net_ft_description)/urdf/net_ft_sensor.ros2_control.xacro" />
-    <xacro:net_ft_sensor_ros2_control
-      name="NetFtHardwareInterface"
-      sensor_type="ati"
-      ip_address="${ip_address}"
-      rdt_sampling_rate="${rdt_sampling_rate}"
-      internal_filter_rate="${internal_filter_rate}"
-      use_hardware_biasing="${use_hardware_biasing}" />
+    <xacro:unless value="${gazebo}">
+      <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.ros2_control.urdf.xacro"/>
+      <xacro:net_ft_sensor_ros2_control
+          ip_address="${ip_address}"
+          rdt_sampling_rate="${rdt_sampling_rate}"
+          internal_filter_rate="${internal_filter_rate}"
+          use_hardware_biasing="${use_hardware_biasing}"
+          ft_sensor_frame_name="${measurement_frame_name}"/>
+    </xacro:unless>
   </xacro:macro>
 </robot>

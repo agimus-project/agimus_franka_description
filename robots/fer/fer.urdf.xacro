@@ -2,7 +2,6 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fer">
 
   <xacro:include filename="$(find franka_description)/robots/common/franka_robot.xacro"/>
-  <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.urdf.xacro" />
 
   <!--
     DEPRECATION NOTICE
@@ -44,14 +43,14 @@
   <xacro:arg name="use_fake_hardware" default="false" />
   <!-- Should fake sensors be used? -->
   <xacro:arg name="fake_sensor_commands" default="false" />
-  <!-- Should the robot be spawned in Gazebo with effort interfaces?" -->
+  <!-- Should the robot be spawned in Gazebo with effort interfaces? -->
   <xacro:arg name="gazebo_effort" default="false" />
 
   <!-- For a multi arm setup, we need a threaded robot running async-->
   <xacro:arg name="multi_arm" default="false" />
 
-  <!-- IP address or hostname of the force-torque sensor" -->
-  <xacro:arg name="ft_sensor_ip" default="" />
+  <!-- Should force torque sensors be used? -->
+  <xacro:arg name="use_ft_sensor" default="false" />
 
   <xacro:franka_robot arm_id="fer"
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fer/joint_limits.yaml')}"
@@ -69,20 +68,8 @@
                       fake_sensor_commands="$(arg fake_sensor_commands)"
                       gazebo_effort="$(arg gazebo_effort)"
                       no_prefix="$(arg no_prefix)"
-                      arm_prefix= ""
-                      connected_to= "base">
+                      arm_prefix=""
+                      connected_to="base"
+                      use_ft_sensor="$(arg use_ft_sensor)">
   </xacro:franka_robot>
-
-  <!-- ATI sensors have sampling rate as 7000 divided by an integer -->
-  <!-- Dividing by 3 is the closest to 2 times 1000 Hz which is the -->
-  <!-- control frequency of Panda -->
-  <xacro:property name="rdt_sampling_rate" value="${int(7000 / 3)}" />
-  <xacro:ati_mini45 parent_link="fer_link8"
-                    prefix=""
-                    ip_address="$(arg ft_sensor_ip)"
-                    rdt_sampling_rate="${rdt_sampling_rate}"
-                    internal_filter_rate="0"
-                    use_hardware_biasing="false"
-                    sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/ft_sensors/inertials.yaml')}">
-  </xacro:ati_mini45>
 </robot>

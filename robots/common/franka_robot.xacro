@@ -22,8 +22,8 @@
                       no_prefix:='false'
                       arm_prefix:=''
                       connected_to:='base'
-                      multi_arm:=false"
-                      >
+                      multi_arm:=false
+                      use_ft_sensor:='false'">
     <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" />
 
     <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
@@ -44,6 +44,27 @@
       connected_to="${connected_to}"
     />
 
+    <xacro:if value="${use_ft_sensor}">
+      <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.urdf.xacro" />
+      <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro" />
+      <xacro:property name="ft_sensor_measurement_frame_name" value="${arm_prefix_modified}ati_mini45_measurement_reference" />
+      <xacro:ati_mini45 
+        parent_link="fer_link8"
+        prefix="${arm_prefix_modified}"
+        ip_address="$(arg ft_sensor_ip)"
+        gazebo="${gazebo}"
+        rdt_sampling_rate="$(arg rdt_sampling_rate)"
+        internal_filter_rate="$(arg internal_filter_rate)"
+        use_hardware_biasing="$(arg use_hardware_biasing)"
+        sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/ft_sensors/inertials.yaml')}"
+        measurement_frame_name="${ft_sensor_measurement_frame_name}">
+      </xacro:ati_mini45>
+    </xacro:if>
+    <xacro:unless value="${use_ft_sensor}">
+      <xacro:property name="ft_sensor_measurement_frame_name" value="${arm_prefix_modified}ati_mini45_measurement_reference" />
+    </xacro:unless>
+
+
     <xacro:if value="${hand and ee_id == 'franka_hand'}">
       <xacro:include filename="$(find franka_description)/end_effectors/common/franka_hand.xacro"/>
       <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
@@ -55,7 +76,8 @@
         <xacro:property name="ee_color" value="white" />
       </xacro:if>
       <xacro:property name="special_connection" value="$(arg special_connection)" />
-      <xacro:property name="connection" value="${special_connection if special_connection != '' else arm_id + '_link8'}" />
+      <xacro:property name="default_connection" value="${(arm_id + '_link8') if not use_ft_sensor else 'ati_mini45_tool_mount'}" />
+      <xacro:property name="connection" value="${special_connection if special_connection != '' else default_connection}" />
       <xacro:franka_hand
         connected_to="${arm_prefix_modified}${connection}"
         arm_id="${arm_id}"
@@ -77,8 +99,8 @@
       <xacro:include filename="$(find franka_description)/end_effectors/common/ee_with_one_link.xacro"/>
       <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
       <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id)_arguments.xacro" />
-      <xacro:property name="special_connection" value="$(arg special_connection)" />
-      <xacro:property name="connection" value="${special_connection if special_connection == '' else arm_id + '_link8'}" />
+      <xacro:property name="default_connection" value="${(arm_id + '_link8') if not use_ft_sensor else 'ati_mini45_tool_mount'}" />
+      <xacro:property name="connection" value="${special_connection if special_connection != '' else default_connection}" />
       <xacro:ee_with_one_link
         connected_to="${arm_prefix_modified}${connection}"
         arm_id="${arm_id}"
@@ -218,6 +240,8 @@
           gazebo_effort="$(arg gazebo_effort)"
           arm_prefix="${arm_prefix}"
           multi_arm="$(arg multi_arm)"
+          use_ft_sensor="${use_ft_sensor}"
+          ft_sensor_frame_name="${ft_sensor_measurement_frame_name}"
       />
     </xacro:if>
 

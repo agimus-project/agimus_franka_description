@@ -110,6 +110,14 @@ ign service -s /world/empty/create \
               <size>100 100</size>
             </plane>
           </geometry>
+          <surface>
+            <contact>
+                <ode>
+                  <kp>2000</kp>
+                  <kd>200</kd>
+                </ode>
+              </contact>
+          </surface>
         </collision>
         <visual name="visual">
           <geometry>

@@ -131,14 +131,20 @@
           </ros>
         </plugin>
       </gazebo>
+
+      <plugin filename="ignition-gazebo-forcetorque-system" name="ignition::gazebo::systems::ForceTorque" />
+
       
       <!-- For now ft-sensor in gazebo doesn't seem to work. Even though the syntax for the sensor seems to match-->
       <!-- what can be found in unit tests of the Gazebo and sensor is registered in the UI of Gazebo. -->
-      <gazebo reference="${arm_prefix_modified}${arm_id}_joint7">
+      <!-- <gazebo reference="${ft_sensor_frame_name}_joint"> -->
+       <gazebo reference="${arm_prefix_modified}${arm_id}_joint7">
+        <provideFeedback>true</provideFeedback>
+        <preserveFixedJoint>true</preserveFixedJoint>
         <sensor name="ati_mini45" type="force_torque">
-          <alwaysOn>1</alwaysOn>
+          <alwaysOn>true</alwaysOn>
           <update_rate>1000</update_rate>
-          <visualize>1</visualize>
+          <visualize>true</visualize>
           <frame>${ft_sensor_frame_name}</frame>
           <ignition_frame_id>${ft_sensor_frame_name}</ignition_frame_id>
           <topic>force_torque</topic>

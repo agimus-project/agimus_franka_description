@@ -51,22 +51,22 @@
       </joint>
     </xacro:if>
 
-
-    <joint name="${prefix}ati_mini45_tool_mount_joint" type="fixed">
-      <parent link="${prefix}ati_mini45" />
-      <child link="${prefix}ati_mini45_tool_mount" />
-      <origin xyz="0 0 ${length}" rpy="0 0 0" />
-    </joint>
-
-    <link name="${prefix}ati_mini45_tool_mount" />
-
     <joint name="${measurement_frame_name}_joint" type="fixed">
       <parent link="${prefix}ati_mini45" />
       <child link="${measurement_frame_name}" />
       <origin xyz="0 0 ${length / 2}" rpy="${pi} 0.0 ${pi / 3 * 2}" />
     </joint>
-
+    
     <link name="${measurement_frame_name}" />
+
+    <joint name="${prefix}ati_mini45_tool_mount_joint" type="fixed">
+      <parent link="${measurement_frame_name}" />
+      <child link="${prefix}ati_mini45_tool_mount" />
+      <origin xyz="0 0 ${-length / 2}" rpy="${pi} 0.0 ${pi / 3 * 2}" />
+    </joint>
+
+    <link name="${prefix}ati_mini45_tool_mount" />
+
 
     <xacro:unless value="${gazebo}">
       <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.ros2_control.urdf.xacro"/>

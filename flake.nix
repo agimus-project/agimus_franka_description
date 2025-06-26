@@ -30,6 +30,7 @@
                 ./rviz
                 ./scripts
                 ./test
+                ./worlds
               ];
             };
           };

@@ -67,7 +67,9 @@
       <origin xyz="0 0 0.073915" rpy="${pi} 0.0 ${pi / 3 * 2}" />
     </joint>
 
-    <link name="${prefix_expanded}ati_mini45_with_camera_tool_mount" />
+    <link name="${prefix_expanded}ati_mini45_with_camera_tool_mount">
+      <xacro:ee-inertials name="ati_mini45_with_camera_tip" />
+    </link>
 
 
     <xacro:unless value="${gazebo}">

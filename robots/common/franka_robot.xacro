@@ -102,7 +102,6 @@
       <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id)_arguments.xacro" />
       <xacro:property name="special_connection" value="$(arg special_connection)" />
       <xacro:property name="default_connection" value="${arm_id + '_link8'}" />
-      <xacro:property name="connection" value="${special_connection if special_connection != '' else default_connection}" />
       <xacro:ati_mini45_with_camera
           parent_link="${arm_prefix_modified}${default_connection}"
           prefix="${arm_prefix_modified}${arm_id}"

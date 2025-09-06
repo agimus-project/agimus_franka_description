@@ -61,14 +61,14 @@
     
     <link name="${measurement_frame_name}" />
 
-    <joint name="${prefix_expanded}ati_mini45_with_camera_tool_mount_joint" type="fixed">
+    <joint name="${prefix_expanded}ati_mini45_with_camera_tool_joint" type="fixed">
       <parent link="${measurement_frame_name}" />
-      <child link="${prefix_expanded}ati_mini45_with_camera_tool_mount" />
+      <child link="${prefix_expanded}ati_mini45_with_camera_tool" />
       <origin xyz="0 0 0.073915" rpy="${pi} 0.0 ${pi / 3 * 2}" />
     </joint>
 
-    <link name="${prefix_expanded}ati_mini45_with_camera_tool_mount">
-      <xacro:ee-inertials name="ati_mini45_with_camera_tip" />
+    <link name="${prefix_expanded}ati_mini45_with_camera_tool">
+      <xacro:ee-inertials name="ati_mini45_with_camera_tool" />
     </link>
 
 

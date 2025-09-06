@@ -13,7 +13,7 @@ ati_mini45_with_camera_base:
     xz: 0
     yz: 0
 
-ati_mini45_with_camera_tip:
+ati_mini45_with_camera_tool:
   origin:
     xyz: 0 0 0
     rpy: 0 0 0

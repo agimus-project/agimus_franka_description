@@ -50,7 +50,7 @@
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.urdf.xacro" />
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro" />
         <xacro:ati_mini45 
-          parent_link="${arm_prefix_modified}_link8"
+          parent_link="${arm_id}_link8"
           prefix="${arm_prefix_modified}"
           ip_address="$(arg ft_sensor_ip)"
           gazebo="${gazebo}"
@@ -100,7 +100,6 @@
       <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
       <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id).urdf.xacro" />
       <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id)_arguments.xacro" />
-      <xacro:property name="special_connection" value="$(arg special_connection)" />
       <xacro:property name="default_connection" value="${arm_id + '_link8'}" />
       <xacro:ati_mini45_with_camera
           parent_link="${arm_prefix_modified}${default_connection}"
@@ -159,7 +158,7 @@
 
     <!-- use_mesh="true" produces an error when visualizing with rviz2
     because the generated urdf contains mesh filename paths that do not start with file:// -->
-    <xacro:sensor_d435 parent="${arm_id}_ref_camera_link" name="camera" use_nominal_extrinsics="true" use_mesh="true">
+    <xacro:sensor_d435 parent="${arm_id}_ref_camera_link" name="camera" use_nominal_extrinsics="true" use_mesh="false">
       <origin xyz="0 0 0" rpy="0 0 0"/>
     </xacro:sensor_d435>
 

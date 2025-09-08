@@ -32,7 +32,6 @@
           <mesh
             filename="package://${description_pkg}/meshes/robot_ee/ati_mini45_with_camera/visual/ati_mini45_with_camera.stl" />
         </geometry>
-        <origin xyz="0 0 ${length / 2}" rpy="0 0 0" />
       </collision>
       <xacro:ee-inertials name="ati_mini45_with_camera_base" />
     </link>
@@ -68,6 +67,11 @@
     </joint>
 
     <link name="${prefix_expanded}ati_mini45_with_camera_tool">
+      <collision name="${prefix_expanded}ati_mini45_with_camera_collision">
+        <geometry>
+          <sphere radius="0.013"/>
+        </geometry>
+      </collision>
       <xacro:ee-inertials name="ati_mini45_with_camera_tool" />
     </link>
 

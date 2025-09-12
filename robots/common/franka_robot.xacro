@@ -112,7 +112,8 @@
           internal_filter_rate="$(arg internal_filter_rate)"
           use_hardware_biasing="$(arg use_hardware_biasing)"
           sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/$(arg ee_id)/inertials.yaml')}"
-          measurement_frame_name="${ft_sensor_measurement_frame_name}" />
+          measurement_frame_name="${ft_sensor_measurement_frame_name}" 
+          with_sc="${with_sc}" />
     </xacro:if>
 
     <xacro:if value="${hand and ee_id != 'none' and ee_id != 'franka_hand' and ee_id != 'ati_mini45_with_camera'}">

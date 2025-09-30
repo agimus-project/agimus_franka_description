@@ -52,6 +52,9 @@
   <!-- Should force torque sensors be used? -->
   <xacro:arg name="use_ft_sensor" default="false" />
 
+  <!-- Should RealSense d435i be loaded? -->
+  <xacro:arg name="use_camera" default="false" />
+
   <xacro:franka_robot arm_id="fer"
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fer/joint_limits.yaml')}"
                       inertials="${xacro.load_yaml('$(find franka_description)/robots/fer/inertials.yaml')}"
@@ -70,6 +73,7 @@
                       no_prefix="$(arg no_prefix)"
                       arm_prefix=""
                       connected_to="base"
-                      use_ft_sensor="$(arg use_ft_sensor)">
+                      use_ft_sensor="$(arg use_ft_sensor)"
+                      use_camera="$(arg use_camera)">
   </xacro:franka_robot>
 </robot>

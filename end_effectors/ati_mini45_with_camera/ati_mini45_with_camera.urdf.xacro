@@ -30,7 +30,7 @@
       <collision name="${prefix_expanded}ati_mini45_with_camera_collision">
         <geometry>
           <mesh
-            filename="package://${description_pkg}/meshes/robot_ee/ati_mini45_with_camera/visual/ati_mini45_with_camera.stl" />
+            filename="package://${description_pkg}/meshes/robot_ee/ati_mini45_with_camera/collision/ati_mini45_with_camera.stl" />
         </geometry>
       </collision>
       <xacro:ee-inertials name="ati_mini45_with_camera_base" />

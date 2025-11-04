@@ -23,7 +23,8 @@
                       arm_prefix:=''
                       connected_to:='base'
                       multi_arm:=false
-                      use_ft_sensor:='false'">
+                      use_ft_sensor:='false'
+                      use_camera:='false'">
     <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" />
 
     <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
@@ -46,7 +47,7 @@
 
     <xacro:if value="${use_ft_sensor}">
       <xacro:property name="ft_sensor_measurement_frame_name" value="${arm_prefix_modified}ati_mini45_measurement_reference" />
-      <xacro:if value="${hand and ee_id != 'ati_mini45_with_camera'}">
+      <xacro:if value="${hand and ee_id != 'ati_mini45_with_camera' and ee_id != 'ati_mini45_no_camera'}">
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.urdf.xacro" />
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro" />
         <xacro:ati_mini45 
@@ -116,7 +117,27 @@
           with_sc="${with_sc}" />
     </xacro:if>
 
-    <xacro:if value="${hand and ee_id != 'none' and ee_id != 'franka_hand' and ee_id != 'ati_mini45_with_camera'}">
+    <xacro:if value="${hand and ee_id == 'ati_mini45_no_camera'}">
+      <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
+      <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id).urdf.xacro" />
+      <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id)_arguments.xacro" />
+      <xacro:property name="default_connection" value="${arm_id + '_link8'}" />
+      <xacro:ati_mini45_no_camera
+          parent_link="${arm_prefix_modified}${default_connection}"
+          prefix="${arm_prefix_modified}${arm_id}"
+          ip_address="$(arg ft_sensor_ip)"
+          gazebo="${gazebo}"
+          rpy_ee="$(arg rpy_ee)"
+          xyz_ee="$(arg xyz_ee)"
+          rdt_sampling_rate="$(arg rdt_sampling_rate)"
+          internal_filter_rate="$(arg internal_filter_rate)"
+          use_hardware_biasing="$(arg use_hardware_biasing)"
+          sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/$(arg ee_id)/inertials.yaml')}"
+          measurement_frame_name="${ft_sensor_measurement_frame_name}" 
+          with_sc="${with_sc}" />
+    </xacro:if>
+
+    <xacro:if value="${hand and ee_id != 'none' and ee_id != 'franka_hand' and ee_id != 'ati_mini45_with_camera' and ee_id != 'ati_mini45_no_camera'}">
       <xacro:include filename="$(find franka_description)/end_effectors/common/ee_with_one_link.xacro"/>
       <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
       <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id)_arguments.xacro" />
@@ -138,61 +159,64 @@
       />
     </xacro:if>
 
-    <!-- D435 camera -->
-    <!-- TODO: pass location of calibrated_params -->
-    <xacro:property name="camera_pose_file"
-                    value="$(find franka_description)/end_effectors/$(arg ee_id)/calibrated_params.yaml" />
-    <xacro:property name="camera_pose" value="${xacro.load_yaml(camera_pose_file)}"/>
+    <xacro:if value="${use_camera}">
 
-    <link name="${arm_id}_ref_camera_link"/>
-    <joint name="${arm_id}_ref_camera_joint" type="fixed">
-      <parent link="${camera_pose['camera']['parent_frame']}"/>
-      <child link="${arm_id}_ref_camera_link"/>
-      <origin xyz="${camera_pose['camera']['x']}
-                    ${camera_pose['camera']['y']}
-                    ${camera_pose['camera']['z']}"
-        rpy="${camera_pose['camera']['roll']}
-                    ${camera_pose['camera']['pitch']}
-                    ${camera_pose['camera']['yaw']}"/>
-    </joint>
-    <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+      <!-- D435 camera -->
+      <!-- TODO: pass location of calibrated_params -->
+      <xacro:property name="camera_pose_file"
+                      value="$(find franka_description)/end_effectors/$(arg ee_id)/calibrated_params.yaml" />
+      <xacro:property name="camera_pose" value="${xacro.load_yaml(camera_pose_file)}"/>
 
-    <!-- use_mesh="true" produces an error when visualizing with rviz2
-    because the generated urdf contains mesh filename paths that do not start with file:// -->
-    <xacro:sensor_d435 parent="${arm_id}_ref_camera_link" name="camera" use_nominal_extrinsics="true" use_mesh="true">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-    </xacro:sensor_d435>
+      <link name="${arm_id}_ref_camera_link"/>
+      <joint name="${arm_id}_ref_camera_joint" type="fixed">
+        <parent link="${camera_pose['camera']['parent_frame']}"/>
+        <child link="${arm_id}_ref_camera_link"/>
+        <origin xyz="${camera_pose['camera']['x']}
+                      ${camera_pose['camera']['y']}
+                      ${camera_pose['camera']['z']}"
+          rpy="${camera_pose['camera']['roll']}
+                      ${camera_pose['camera']['pitch']}
+                      ${camera_pose['camera']['yaw']}"/>
+      </joint>
+      <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
 
-    <!-- camera support -->
-     <xacro:unless value="${ee_id == 'ati_mini45_with_camera'}">
-       <link name="${arm_id}_camera_support_link">
-         <inertial>
-           <mass value="0.010"/>
-           <origin xyz="0 0 0"/>
-           <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
-         </inertial>
-         <visual>
-           <origin xyz="0.022 0 -0.012" rpy="${pi} 0 -${pi / 2}"/>
-           <geometry>
-             <mesh filename="package://franka_description/meshes/camera_support.stl" />
-           </geometry>
-           <material name="camera_support">
-             <color rgba="0 0.0 0.0 1.0"/>
-           </material>
-         </visual>
-         <collision>
-           <origin xyz="0.022 0 -0.012" rpy="${pi} 0 -${pi / 2}"/>
-           <geometry>
-             <mesh filename="package://franka_description/meshes/camera_support.stl" />
-           </geometry>
-         </collision>
-       </link>
-       <joint name="${arm_id}_camera_support_joint" type="fixed">
-         <parent link="${camera_pose['camera']['parent_frame']}"/>
-         <child link="${arm_id}_camera_support_link"/>
-         <origin xyz="0 0 0" rpy="${pi} 0 0"/>
-       </joint>
-     </xacro:unless>
+      <!-- use_mesh="true" produces an error when visualizing with rviz2
+      because the generated urdf contains mesh filename paths that do not start with file:// -->
+      <xacro:sensor_d435 parent="${arm_id}_ref_camera_link" name="camera" use_nominal_extrinsics="true" use_mesh="true">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </xacro:sensor_d435>
+
+      <!-- camera support -->
+      <xacro:unless value="${ee_id == 'ati_mini45_with_camera'}">
+        <link name="${arm_id}_camera_support_link">
+          <inertial>
+            <mass value="0.010"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+          </inertial>
+          <visual>
+            <origin xyz="0.022 0 -0.012" rpy="${pi} 0 -${pi / 2}"/>
+            <geometry>
+              <mesh filename="package://franka_description/meshes/camera_support.stl" />
+            </geometry>
+            <material name="camera_support">
+              <color rgba="0 0.0 0.0 1.0"/>
+            </material>
+          </visual>
+          <collision>
+            <origin xyz="0.022 0 -0.012" rpy="${pi} 0 -${pi / 2}"/>
+            <geometry>
+              <mesh filename="package://franka_description/meshes/camera_support.stl" />
+            </geometry>
+          </collision>
+        </link>
+        <joint name="${arm_id}_camera_support_joint" type="fixed">
+          <parent link="${camera_pose['camera']['parent_frame']}"/>
+          <child link="${arm_id}_camera_support_link"/>
+          <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+        </joint>
+      </xacro:unless>
+     </xacro:if>
 
      <!-- Definition of additional Gazebo tags -->
     <xacro:if value="${gazebo}">

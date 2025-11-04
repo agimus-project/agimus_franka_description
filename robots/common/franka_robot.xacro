@@ -24,7 +24,8 @@
                       connected_to:='base'
                       multi_arm:=false
                       use_ft_sensor:='false'
-                      use_camera:='false'">
+                      use_camera:='false'
+                      robot_safety_distance:=0.03">
     <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" />
 
     <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
@@ -35,7 +36,7 @@
       no_prefix="${no_prefix}"
       xyz="${xyz}"
       rpy="${rpy}"
-      safety_distance="0.03"
+      safety_distance="${robot_safety_distance}"
       gazebo="${gazebo}"
       joint_limits="${joint_limits}"
       kinematics="${kinematics}"

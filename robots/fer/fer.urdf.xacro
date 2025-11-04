@@ -55,6 +55,9 @@
   <!-- Should RealSense d435i be loaded? -->
   <xacro:arg name="use_camera" default="false" />
 
+  <!-- Safety distance for capsules used by the robot -->
+  <xacro:arg name="robot_safety_distance" default="0.03" />
+
   <xacro:franka_robot arm_id="fer"
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fer/joint_limits.yaml')}"
                       inertials="${xacro.load_yaml('$(find franka_description)/robots/fer/inertials.yaml')}"
@@ -74,6 +77,7 @@
                       arm_prefix=""
                       connected_to="base"
                       use_ft_sensor="$(arg use_ft_sensor)"
-                      use_camera="$(arg use_camera)">
+                      use_camera="$(arg use_camera)"
+                      robot_safety_distance="$(arg robot_safety_distance)">
   </xacro:franka_robot>
 </robot>

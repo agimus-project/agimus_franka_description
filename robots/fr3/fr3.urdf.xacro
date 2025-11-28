@@ -47,6 +47,10 @@
   <!-- For a multi arm setup, we need a threaded robot running async-->
   <xacro:arg name="multi_arm" default="false" />
 
+  <!-- Initial configuration used in Gazebo -->
+  <xacro:arg name="initial_joint_position" default="0.0 -0.78 0.0 -2.35 0.0 1.57 0.78 0.0" />
+
+
   <xacro:franka_robot arm_id="fr3"
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')}"
                       inertials="${xacro.load_yaml('$(find franka_description)/robots/fr3/inertials.yaml')}"
@@ -64,7 +68,8 @@
                       gazebo_effort="$(arg gazebo_effort)"
                       no_prefix="$(arg no_prefix)"
                       arm_prefix= ""
-                      connected_to= "base">
+                      connected_to= "base"
+                      initial_joint_position="$(arg initial_joint_position)">
   </xacro:franka_robot>
 
 </robot>

@@ -58,6 +58,9 @@
   <!-- Safety distance for capsules used by the robot -->
   <xacro:arg name="robot_safety_distance" default="0.03" />
 
+  <!-- Initial configuration used in Gazebo -->
+  <xacro:arg name="initial_joint_position" default="0.0 -0.78 0.0 -2.35 0.0 1.57 0.78 0.0" />
+
   <xacro:franka_robot arm_id="fer"
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fer/joint_limits.yaml')}"
                       inertials="${xacro.load_yaml('$(find franka_description)/robots/fer/inertials.yaml')}"
@@ -78,6 +81,7 @@
                       connected_to="base"
                       use_ft_sensor="$(arg use_ft_sensor)"
                       use_camera="$(arg use_camera)"
-                      robot_safety_distance="$(arg robot_safety_distance)">
+                      robot_safety_distance="$(arg robot_safety_distance)"
+                      initial_joint_position="$(arg initial_joint_position)">
   </xacro:franka_robot>
 </robot>

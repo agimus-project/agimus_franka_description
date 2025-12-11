@@ -25,7 +25,8 @@
                       multi_arm:=false
                       use_ft_sensor:='false'
                       use_camera:='false'
-                      robot_safety_distance:=0.03">
+                      robot_safety_distance:=0.03
+                      initial_joint_position:='0.0 -0.78 0.0 -2.35 0.0 1.57 0.78 0.0'">
     <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" />
 
     <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
@@ -288,6 +289,7 @@
           multi_arm="$(arg multi_arm)"
           use_ft_sensor="${use_ft_sensor}"
           ft_sensor_frame_name="${ft_sensor_measurement_frame_name}"
+          initial_joint_position="${initial_joint_position}"
       />
     </xacro:if>
 

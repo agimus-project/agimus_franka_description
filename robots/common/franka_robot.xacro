@@ -166,7 +166,7 @@
       <!-- D435 camera -->
       <!-- TODO: pass location of calibrated_params -->
       <xacro:property name="camera_pose_file"
-                      value="$(find franka_description)/end_effectors/$(arg ee_id)/calibrated_params.yaml" />
+                      value="$(find franka_description)/end_effectors/$(arg ee_id)/${arm_id}/calibrated_params.yaml" />
       <xacro:property name="camera_pose" value="${xacro.load_yaml(camera_pose_file)}"/>
 
       <link name="${arm_id}_ref_camera_link"/>

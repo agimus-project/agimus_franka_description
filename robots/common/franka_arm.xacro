@@ -128,8 +128,8 @@
 
     <xacro:link_with_sc no_prefix="${no_prefix}" name="link7" gazebo="${gazebo}" rpy="0 0 ${pi/4}" with_sc="${with_sc}">
       <self_collision_geometries>
-        <xacro:collision_capsule xyz="0 0 0.035" direction="z" radius="${0.045+safety_distance}" length="0.31" />
-        <xacro:collision_capsule xyz="0.05 0 0.082" direction="x" radius="${0.03+safety_distance}" length="0.05" />
+        <xacro:collision_capsule xyz="0 0 0.02" direction="z" radius="${0.045+safety_distance}" length="0.28" />
+        <xacro:collision_capsule xyz="0.06 0 0.082" direction="y" radius="${0.03+safety_distance}" length="0.05" />
       </self_collision_geometries>
     </xacro:link_with_sc>
 

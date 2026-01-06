@@ -189,7 +189,12 @@
                       value="$(find franka_description)/end_effectors/$(arg ee_id)/${arm_id}/calibrated_params.yaml" />
       <xacro:property name="camera_pose" value="${xacro.load_yaml(camera_pose_file)}"/>
 
-      <link name="${arm_id}_ref_camera_link"/>
+      <link name="${arm_id}_ref_camera_link">
+        <xacro:if value="${with_sc}">
+          <xacro:collision_capsule xyz="0.002 0 0.012" direction="y" radius="${0.015+robot_safety_distance}" length="0.13" />
+        </xacro:if>
+      </link>
+
       <joint name="${arm_id}_ref_camera_joint" type="fixed">
         <parent link="${camera_pose['camera']['parent_frame']}"/>
         <child link="${arm_id}_ref_camera_link"/>

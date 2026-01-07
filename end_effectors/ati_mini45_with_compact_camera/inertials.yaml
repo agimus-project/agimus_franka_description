@@ -15,7 +15,7 @@ ati_mini45_with_compact_camera_base:
 
 ati_mini45_with_compact_camera_tool:
   origin:
-    xyz: 0.0 0.0 0.0305
+    xyz: 0.0 0.0 -0.048
     rpy: 0 0 0
   mass: 0.165
   inertia:

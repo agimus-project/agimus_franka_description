@@ -49,7 +49,7 @@
 
     <xacro:if value="${use_ft_sensor}">
       <xacro:property name="ft_sensor_measurement_frame_name" value="${arm_prefix_modified}ati_mini45_measurement_reference" />
-      <xacro:if value="${hand and ee_id != 'ati_mini45_with_camera' and ee_id != 'ati_mini45_no_camera'}">
+      <xacro:if value="${hand and 'ati_mini45' not in ee_id}">
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.urdf.xacro" />
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro" />
         <xacro:ati_mini45 
@@ -139,7 +139,27 @@
           with_sc="${with_sc}" />
     </xacro:if>
 
-    <xacro:if value="${hand and ee_id != 'none' and ee_id != 'franka_hand' and ee_id != 'ati_mini45_with_camera' and ee_id != 'ati_mini45_no_camera'}">
+    <xacro:if value="${hand and ee_id == 'ati_mini45_with_compact_camera'}">
+      <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
+      <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id).urdf.xacro" />
+      <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id)_arguments.xacro" />
+      <xacro:property name="default_connection" value="${arm_id + '_link8'}" />
+      <xacro:ati_mini45_with_compact_camera
+          parent_link="${arm_prefix_modified}${default_connection}"
+          prefix="${arm_prefix_modified}${arm_id}"
+          ip_address="$(arg ft_sensor_ip)"
+          gazebo="${gazebo}"
+          rpy_ee="$(arg rpy_ee)"
+          xyz_ee="$(arg xyz_ee)"
+          rdt_sampling_rate="$(arg rdt_sampling_rate)"
+          internal_filter_rate="$(arg internal_filter_rate)"
+          use_hardware_biasing="$(arg use_hardware_biasing)"
+          sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/$(arg ee_id)/inertials.yaml')}"
+          measurement_frame_name="${ft_sensor_measurement_frame_name}" 
+          with_sc="${with_sc}" />
+    </xacro:if>
+
+    <xacro:if value="${hand and ee_id != 'none' and ee_id != 'franka_hand' and 'ati_mini45' not in ee_id}">
       <xacro:include filename="$(find franka_description)/end_effectors/common/ee_with_one_link.xacro"/>
       <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
       <xacro:include filename="$(find franka_description)/end_effectors/$(arg ee_id)/$(arg ee_id)_arguments.xacro" />
@@ -169,7 +189,12 @@
                       value="$(find franka_description)/end_effectors/$(arg ee_id)/${arm_id}/calibrated_params.yaml" />
       <xacro:property name="camera_pose" value="${xacro.load_yaml(camera_pose_file)}"/>
 
-      <link name="${arm_id}_ref_camera_link"/>
+      <link name="${arm_id}_ref_camera_link">
+        <xacro:if value="${with_sc}">
+          <xacro:collision_capsule xyz="0.002 0 0.012" direction="y" radius="${0.015+robot_safety_distance}" length="0.13" />
+        </xacro:if>
+      </link>
+
       <joint name="${arm_id}_ref_camera_joint" type="fixed">
         <parent link="${camera_pose['camera']['parent_frame']}"/>
         <child link="${arm_id}_ref_camera_link"/>
@@ -189,7 +214,7 @@
       </xacro:sensor_d435>
 
       <!-- camera support -->
-      <xacro:unless value="${ee_id == 'ati_mini45_with_camera'}">
+      <xacro:unless value="${ee_id == 'ati_mini45_with_camera' or ee_id == 'ati_mini45_with_compact_camera'}">
         <link name="${arm_id}_camera_support_link">
           <inertial>
             <mass value="0.010"/>

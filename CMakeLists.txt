@@ -12,8 +12,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-cmake_minimum_required(VERSION 3.5)
-project(franka_description)
+cmake_minimum_required(VERSION 3.22)
+set(BASE_NAME franka_description)
+project(agimus_${BASE_NAME})
 find_package(ament_cmake REQUIRED)
 
 
@@ -29,10 +30,21 @@ endif()
 # Install launch files.
 install(DIRECTORY
   launch robots end_effectors meshes rviz worlds
-  DESTINATION share/${PROJECT_NAME}/
+  DESTINATION share/${BASE_NAME}/
 )
 
 ament_environment_hooks(
-  "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.sh.in")
+  "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${BASE_NAME}.sh.in")
 
 ament_package()
+
+file(
+  WRITE
+  ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${BASE_NAME}
+  ""
+)
+install(
+  FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${BASE_NAME}
+  DESTINATION share/ament_index/resource_index/packages
+)

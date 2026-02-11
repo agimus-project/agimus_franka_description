@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>franka_description</name>
+  <name>agimus_franka_description</name>
   <version>0.4.0</version>
-  <description>franka_description contains URDF files and meshes of Franka robots</description>
-  <maintainer email="support@franka.de">Franka Robotics GmbH</maintainer>
-  <license>Apache 2.0</license>
+  <description>fork of franka_description with URDF files and meshes of Franka robots not maintained anymore by franka</description>
+  <maintainer email="guilhem.saurel@laas.fr">Guilhem Saurel</maintainer>
+  <license>Apache-2.0</license>
   <author>Franka Robotics GmbH</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

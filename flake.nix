@@ -1,40 +1,51 @@
 {
   description = "ROS integration for Franka research robots";
 
-  inputs.nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
+  inputs = {
+    gazebros2nix.url = "github:gepetto/gazebros2nix";
+    flake-parts.follows = "gazebros2nix/flake-parts";
+    nixpkgs.follows = "gazebros2nix/nixpkgs";
+    nix-ros-overlay.follows = "gazebros2nix/nix-ros-overlay";
+    systems.follows = "gazebros2nix/systems";
+    treefmt-nix.follows = "gazebros2nix/treefmt-nix";
+  };
 
   outputs =
-    { nix-ros-overlay, self, ... }:
-    nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nix-ros-overlay.inputs.nixpkgs {
-          inherit system;
-          overlays = [ nix-ros-overlay.overlays.default ];
-        };
-      in
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
       {
-        packages = {
-          default = self.packages.${system}.franka-description;
-          franka-description = pkgs.rosPackages.humble.franka-description.overrideAttrs {
-            src = pkgs.lib.fileset.toSource {
-              root = ./.;
-              fileset = pkgs.lib.fileset.unions [
-                ./CMakeLists.txt
-                ./end_effectors
-                ./env-hooks
-                ./launch
-                ./meshes
-                ./package.xml
-                ./robots
-                ./rviz
-                ./scripts
-                ./test
-                ./worlds
-              ];
+        systems = import inputs.systems;
+        imports = [
+          inputs.gazebros2nix.flakeModule
+          {
+            gazebros2nix.rosPackages = {
+              agimus-franka-description = _final: _ros-final: {
+                src = lib.fileset.toSource {
+                  root = ./.;
+                  fileset = lib.fileset.unions [
+                    ./CMakeLists.txt
+                    ./end_effectors
+                    ./env-hooks
+                    ./launch
+                    ./meshes
+                    ./package.xml
+                    ./robots
+                    ./rviz
+                    ./scripts
+                    ./test
+                    ./worlds
+                  ];
+                };
+              };
             };
+          }
+        ];
+        perSystem =
+          { self', ... }:
+          {
+            packages.default = self'.packages.ros-rolling-agimus-franka-description;
           };
-        };
       }
     );
 }

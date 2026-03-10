@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fer">
 
-  <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" />
+  <xacro:include filename="$(find agimus_franka_description)/robots/common/utils.xacro" />
 
   <!-- safety_distance: Minimum safety distance in [m] by which the collision volumes are expanded and which is enforced during robot motions -->
   <!-- arm_id: Namespace of the robot arm. Serves to differentiate between arms in case of multiple instances. -->
-  <!-- joint_limits: description of the joint limits that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')} -->
-  <!-- kinematics: description of the kinematics that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find franka_description)/robots/fr3/kinematics.yaml')} -->
-  <!-- inertials: description of the inertials that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find franka_description)/robots/fr3/inertials.yaml')} -->
-  <!-- dynamics: description of the dynamics that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find franka_description)/robots/fr3/dynamics.yaml')} -->
+  <!-- joint_limits: description of the joint limits that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find agimus_franka_description)/robots/fr3/joint_limits.yaml')} -->
+  <!-- kinematics: description of the kinematics that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find agimus_franka_description)/robots/fr3/kinematics.yaml')} -->
+  <!-- inertials: description of the inertials that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find agimus_franka_description)/robots/fr3/inertials.yaml')} -->
+  <!-- dynamics: description of the dynamics that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find agimus_franka_description)/robots/fr3/dynamics.yaml')} -->
 
-  <xacro:macro name="franka_arm" params="arm_id arm_prefix:='' no_prefix:=false description_pkg:='franka_description' connected_to:='base' xyz:='0 0 0' rpy:='0 0 0' gazebo:='false' safety_distance:=0 joint_limits inertials kinematics dynamics with_sc:=false" >
+  <xacro:macro name="agimus_franka_arm" params="arm_id arm_prefix:='' no_prefix:=false description_pkg:='agimus_franka_description' connected_to:='base' xyz:='0 0 0' rpy:='0 0 0' gazebo:='false' safety_distance:=0 joint_limits inertials kinematics dynamics with_sc:=false" >
 
     <!-- Define a property that defaults to 'arm_prefix_arm_id' concatenated with an underscore if 'no_prefix' is not set -->
     <xacro:property name="prefix" value="${'' if no_prefix else arm_prefix + arm_id + '_'}" />
@@ -42,12 +42,12 @@
     </xacro:link_with_sc>
 
     <joint name="${prefix}joint1" type="revolute">
-      <xacro:franka-kinematics name="joint1" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint1" config="${kinematics}" />
       <parent link="${prefix}link0" />
       <child link="${prefix}link1" />
       <axis xyz="0 0 1" />
-      <xacro:franka-limits name="joint1" config="${joint_limits}" />
-      <xacro:franka-dynamics name="joint1" config="${dynamics}" />
+      <xacro:agimus_franka-limits name="joint1" config="${joint_limits}" />
+      <xacro:agimus_franka-dynamics name="joint1" config="${dynamics}" />
     </joint>
 
     <xacro:link_with_sc no_prefix="${no_prefix}" name="link2" gazebo="${gazebo}" with_sc="${with_sc}">
@@ -57,12 +57,12 @@
     </xacro:link_with_sc>
 
     <joint name="${prefix}joint2" type="revolute">
-      <xacro:franka-kinematics name="joint2" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint2" config="${kinematics}" />
       <parent link="${prefix}link1" />
       <child link="${prefix}link2" />
       <axis xyz="0 0 1" />
-      <xacro:franka-limits name="joint2" config="${joint_limits}" />
-      <xacro:franka-dynamics name="joint2" config="${dynamics}" />
+      <xacro:agimus_franka-limits name="joint2" config="${joint_limits}" />
+      <xacro:agimus_franka-dynamics name="joint2" config="${dynamics}" />
     </joint>
 
     <xacro:link_with_sc no_prefix="${no_prefix}" name="link3" gazebo="${gazebo}" with_sc="${with_sc}">
@@ -72,12 +72,12 @@
     </xacro:link_with_sc>
 
     <joint name="${prefix}joint3" type="revolute">
-      <xacro:franka-kinematics name="joint3" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint3" config="${kinematics}" />
       <parent link="${prefix}link2" />
       <child link="${prefix}link3" />
       <axis xyz="0 0 1" />
-      <xacro:franka-limits name="joint3" config="${joint_limits}" />
-      <xacro:franka-dynamics name="joint3" config="${dynamics}" />
+      <xacro:agimus_franka-limits name="joint3" config="${joint_limits}" />
+      <xacro:agimus_franka-dynamics name="joint3" config="${dynamics}" />
     </joint>
 
     <xacro:link_with_sc no_prefix="${no_prefix}" name="link4" gazebo="${gazebo}" with_sc="${with_sc}">
@@ -87,12 +87,12 @@
     </xacro:link_with_sc>
 
     <joint name="${prefix}joint4" type="revolute">
-      <xacro:franka-kinematics name="joint4" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint4" config="${kinematics}" />
       <parent link="${prefix}link3" />
       <child link="${prefix}link4" />
       <axis xyz="0 0 1" />
-      <xacro:franka-limits name="joint4" config="${joint_limits}" />
-      <xacro:franka-dynamics name="joint4" config="${dynamics}" />
+      <xacro:agimus_franka-limits name="joint4" config="${joint_limits}" />
+      <xacro:agimus_franka-dynamics name="joint4" config="${dynamics}" />
     </joint>
 
     <xacro:link_with_sc no_prefix="${no_prefix}" name="link5" gazebo="${gazebo}" with_sc="${with_sc}">
@@ -103,12 +103,12 @@
     </xacro:link_with_sc>
 
     <joint name="${prefix}joint5" type="revolute">
-      <xacro:franka-kinematics name="joint5" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint5" config="${kinematics}" />
       <parent link="${prefix}link4" />
       <child link="${prefix}link5" />
       <axis xyz="0 0 1" />
-      <xacro:franka-limits name="joint5" config="${joint_limits}" />
-      <xacro:franka-dynamics name="joint5" config="${dynamics}" />
+      <xacro:agimus_franka-limits name="joint5" config="${joint_limits}" />
+      <xacro:agimus_franka-dynamics name="joint5" config="${dynamics}" />
     </joint>
 
     <xacro:link_with_sc no_prefix="${no_prefix}" name="link6" gazebo="${gazebo}" with_sc="${with_sc}">
@@ -118,12 +118,12 @@
     </xacro:link_with_sc>
 
     <joint name="${prefix}joint6" type="revolute">
-      <xacro:franka-kinematics name="joint6" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint6" config="${kinematics}" />
       <parent link="${prefix}link5" />
       <child link="${prefix}link6" />
       <axis xyz="0 0 1" />
-      <xacro:franka-limits name="joint6" config="${joint_limits}" />
-      <xacro:franka-dynamics name="joint6" config="${dynamics}" />
+      <xacro:agimus_franka-limits name="joint6" config="${joint_limits}" />
+      <xacro:agimus_franka-dynamics name="joint6" config="${dynamics}" />
     </joint>
 
     <xacro:link_with_sc no_prefix="${no_prefix}" name="link7" gazebo="${gazebo}" rpy="0 0 ${pi/4}" with_sc="${with_sc}">
@@ -134,18 +134,18 @@
     </xacro:link_with_sc>
 
     <joint name="${prefix}joint7" type="revolute">
-      <xacro:franka-kinematics name="joint7" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint7" config="${kinematics}" />
       <parent link="${prefix}link6"/>
       <child link="${prefix}link7"/>
       <axis xyz="0 0 1"/>
-      <xacro:franka-limits name="joint7" config="${joint_limits}" />
-      <xacro:franka-dynamics name="joint7" config="${dynamics}" />
+      <xacro:agimus_franka-limits name="joint7" config="${joint_limits}" />
+      <xacro:agimus_franka-dynamics name="joint7" config="${dynamics}" />
     </joint>
 
     <link name="${prefix}link8"/>
 
     <joint name="${prefix}joint8" type="fixed">
-      <xacro:franka-kinematics name="joint8" config="${kinematics}" />
+      <xacro:agimus_franka-kinematics name="joint8" config="${kinematics}" />
       <parent link="${prefix}link7" />
       <child link="${prefix}link8" />
     </joint>

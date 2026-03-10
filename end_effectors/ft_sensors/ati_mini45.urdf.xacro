@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="ati_mini45">
-  <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
-  <xacro:include filename="$(find franka_description)/end_effectors/common/ee_with_one_link.xacro" />
-  <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro"/>
+  <xacro:include filename="$(find agimus_franka_description)/end_effectors/common/utils.xacro" />
+  <xacro:include filename="$(find agimus_franka_description)/end_effectors/common/ee_with_one_link.xacro" />
+  <xacro:include filename="$(find agimus_franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro"/>
 
   <xacro:macro name="ati_mini45"
-    params="prefix parent_link rpy_sensor:='0 0 0' xyz_sensor:='0 0 0' ip_address rdt_sampling_rate internal_filter_rate use_hardware_biasing sensor_inertials safety_distance:=0 gazebo:=false description_pkg:=franka_description with_sc:=false measurement_frame_name:='ati_mini45_measurement_reference'">
+    params="prefix parent_link rpy_sensor:='0 0 0' xyz_sensor:='0 0 0' ip_address rdt_sampling_rate internal_filter_rate use_hardware_biasing sensor_inertials safety_distance:=0 gazebo:=false description_pkg:=agimus_franka_description with_sc:=false measurement_frame_name:='ati_mini45_measurement_reference'">
 
     <!-- length and radius of the sensor with mounting plates -->
     <xacro:property name="radius" value="0.0315" />
@@ -69,7 +69,7 @@
 
 
     <xacro:unless value="${gazebo}">
-      <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.ros2_control.urdf.xacro"/>
+      <xacro:include filename="$(find agimus_franka_description)/end_effectors/ft_sensors/ati_mini45.ros2_control.urdf.xacro"/>
       <xacro:net_ft_sensor_ros2_control
           ip_address="${ip_address}"
           rdt_sampling_rate="${rdt_sampling_rate}"

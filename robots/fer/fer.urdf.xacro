@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fer">
 
-  <xacro:include filename="$(find franka_description)/robots/common/franka_robot.xacro"/>
+  <xacro:include filename="$(find agimus_franka_description)/robots/common/agimus_franka_robot.xacro"/>
 
   <!--
     DEPRECATION NOTICE
@@ -11,8 +11,8 @@
   <xacro:arg name="arm_id" default="fer" />
 
   <!-- Path to controller configuration when using Gazebo -->
-  <!-- Empty string defaults to "$(find franka_gazebo_bringup)/config/franka_gazebo_controllers.yaml" -->
-  <xacro:arg name="franka_controllers_params" default="" />
+  <!-- Empty string defaults to "$(find agimus_franka_gazebo_bringup)/config/agimus_franka_gazebo_controllers.yaml" -->
+  <xacro:arg name="agimus_franka_controllers_params" default="" />
 
   <!-- Don't print a prefix for joints, visuals, and links? -->
   <xacro:arg name="no_prefix" default="false"/>
@@ -21,7 +21,7 @@
   <xacro:arg name="hand" default="true" />
 
   <!-- Which end-effector would be mounted at the flange?" -->
-  <xacro:arg name="ee_id" default="franka_hand" />
+  <xacro:arg name="ee_id" default="agimus_franka_hand" />
 
   <!-- Is the robot being simulated in gazebo?" -->
   <xacro:arg name="gazebo" default="false" />
@@ -61,12 +61,12 @@
   <!-- Initial configuration used in Gazebo -->
   <xacro:arg name="initial_joint_position" default="0.0 -0.78 0.0 -2.35 0.0 1.57 0.78 0.0" />
 
-  <xacro:franka_robot arm_id="fer"
-                      joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fer/joint_limits.yaml')}"
-                      inertials="${xacro.load_yaml('$(find franka_description)/robots/fer/inertials.yaml')}"
-                      kinematics="${xacro.load_yaml('$(find franka_description)/robots/fer/kinematics.yaml')}"
-                      dynamics="${xacro.load_yaml('$(find franka_description)/robots/fer/dynamics.yaml')}"
-                      franka_controllers_params='$(arg franka_controllers_params)'
+  <xacro:agimus_franka_robot arm_id="fer"
+                      joint_limits="${xacro.load_yaml('$(find agimus_franka_description)/robots/fer/joint_limits.yaml')}"
+                      inertials="${xacro.load_yaml('$(find agimus_franka_description)/robots/fer/inertials.yaml')}"
+                      kinematics="${xacro.load_yaml('$(find agimus_franka_description)/robots/fer/kinematics.yaml')}"
+                      dynamics="${xacro.load_yaml('$(find agimus_franka_description)/robots/fer/dynamics.yaml')}"
+                      agimus_franka_controllers_params='$(arg agimus_franka_controllers_params)'
                       gazebo="$(arg gazebo)"
                       hand="$(arg hand)"
                       ee_id="$(arg ee_id)"
@@ -83,5 +83,5 @@
                       use_camera="$(arg use_camera)"
                       robot_safety_distance="$(arg robot_safety_distance)"
                       initial_joint_position="$(arg initial_joint_position)">
-  </xacro:franka_robot>
+  </xacro:agimus_franka_robot>
 </robot>

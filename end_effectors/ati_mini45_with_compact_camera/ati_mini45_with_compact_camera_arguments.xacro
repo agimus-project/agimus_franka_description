@@ -29,6 +29,6 @@
   <xacro:arg name="safety_distance" default="0.0" />
 
   <!-- Name of the description package -->
-  <xacro:arg name="description_pkg" default="franka_description" />
+  <xacro:arg name="description_pkg" default="agimus_franka_description" />
 
 </robot>

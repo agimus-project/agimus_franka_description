@@ -77,20 +77,20 @@ def save_urdf_to_file(package_path, urdf_file, robot):
 
 
 if __name__ == "__main__":
-    package_name = "franka_description"
+    package_name = "agimus_franka_description"
 
     if os.getcwd().split("/")[-1] != package_name:
-        print("Call the script from franka_description root folder")
+        print("Call the script from agimus_franka_description root folder")
         exit()
 
     ROBOTS = ["multi_arm", "fr3", "fp3", "fer"]
 
-    END_EFFECTORS = ["none", "franka_hand", "cobot_pump"]
+    END_EFFECTORS = ["none", "agimus_franka_hand", "cobot_pump"]
 
     parser = argparse.ArgumentParser(
         description="""
-            Generate franka robots urdf models.
-            Script to be executed from franka_description root folder!
+            Generate agimus_franka robots urdf models.
+            Script to be executed from agimus_franka_description root folder!
             """
     )
 
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--robot-ee",
         type=str,
-        default="franka_hand",
+        default="agimus_franka_hand",
         help="id of the robot end effector (accepted values are: {})".format(ee_str),
     )
     parser.add_argument(
@@ -144,7 +144,7 @@ if __name__ == "__main__":
 
     ROBOT_MODEL = args.robot_model.lower()
     HAND = not args.no_ee
-    EE = args.robot_ee.lower() if args.robot_ee is not None else "franka_hand"
+    EE = args.robot_ee.lower() if args.robot_ee is not None else "agimus_franka_hand"
     WITH_SC = args.with_sc if args.with_sc is not None else False
     ABSOLUTE_PATHS = args.abs_path if args.abs_path is not None else False
     HOST_DIR = args.host_dir

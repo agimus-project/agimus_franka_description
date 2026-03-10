@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:macro name="franka_arm_ros2_control"
+<xacro:macro name="agimus_franka_arm_ros2_control"
          params="arm_id
              robot_ip
              use_fake_hardware:=^|false
              fake_sensor_commands:=^|false
-             franka_controllers_params:=''
+             agimus_franka_controllers_params:=''
              gazebo:=^|false
              hand:=^|false
              gazebo_effort:=^|false
@@ -21,7 +21,7 @@
         <hardware>
           <param name="arm_id">${arm_id}</param>
           <param name="prefix">${arm_prefix}</param>
-            <xacro:if value="${arm_id=='fr3'}"> <!-- New version of the lib franka introduce new parameters for the hardware interface-->
+            <xacro:if value="${arm_id=='fr3'}"> <!-- New version of the lib agimus_franka introduce new parameters for the hardware interface-->
               <param name="version">0.1.0</param>
             </xacro:if>
           <xacro:if value="${use_fake_hardware}">
@@ -31,16 +31,16 @@
           </xacro:if>
 
           <xacro:if value="${gazebo}">
-            <plugin>franka_ign_ros2_control/IgnitionSystem</plugin>
+            <plugin>agimus_franka_ign_ros2_control/IgnitionSystem</plugin>
           </xacro:if>
 
           <xacro:if value="${use_fake_hardware == 0 and gazebo == 0 and multi_arm == 0}">
-            <plugin>franka_hardware/FrankaHardwareInterface</plugin>
+            <plugin>agimus_franka_hardware/FrankaHardwareInterface</plugin>
             <param name="robot_ip">${robot_ip}</param>
             <param name="arm_prefix">${arm_prefix}</param>
           </xacro:if>
           <xacro:if value="${use_fake_hardware == 0 and gazebo == 0 and multi_arm == 1}">
-            <plugin>franka_hardware/MultiFrankaHardwareInterface</plugin>
+            <plugin>agimus_franka_hardware/MultiFrankaHardwareInterface</plugin>
             <param name="robot_ip">${robot_ip}</param>
             <param name="arm_prefix">${arm_prefix}</param>
           </xacro:if>
@@ -116,15 +116,15 @@
 
     <xacro:if value="${gazebo}">
       <gazebo>
-        <plugin filename="franka_ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-           <xacro:if value="${franka_controllers_params == ''}">
-              <parameters>$(find franka_gazebo_bringup)/config/franka_gazebo_controllers.yaml</parameters>
+        <plugin filename="agimus_franka_ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+           <xacro:if value="${agimus_franka_controllers_params == ''}">
+              <parameters>$(find agimus_franka_gazebo_bringup)/config/agimus_franka_gazebo_controllers.yaml</parameters>
            </xacro:if>
-           <xacro:unless value="${franka_controllers_params == ''}">
-               <parameters>${franka_controllers_params}</parameters>
+           <xacro:unless value="${agimus_franka_controllers_params == ''}">
+               <parameters>${agimus_franka_controllers_params}</parameters>
            </xacro:unless>
            <ros>
-            <remapping>/joint_states:=/franka/joint_states</remapping>
+            <remapping>/joint_states:=/agimus_franka/joint_states</remapping>
             <!-- Remapping of actions doesn't seem to work all that well so we need to map every topic and service manually -->
             <!-- Solved in https://github.com/ros2/rcl/pull/1170 but was not backported to humble and not even to jazzy -->
             <remapping>/gripper_action_controller/gripper_cmd/_action/feedback:=/${arm_id}_gripper/gripper_action/_action/feedback</remapping>

@@ -28,18 +28,18 @@ endif()
 
 # Install launch files.
 install(DIRECTORY launch robots end_effectors meshes rviz worlds
-        DESTINATION share/${BASE_NAME}/)
+        DESTINATION share/${PROJECT_NAME}/)
 
 ament_environment_hooks(
-  "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${BASE_NAME}.sh.in")
+  "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.sh.in")
 
 ament_package()
 
 file(
   WRITE
-  ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${BASE_NAME}
+  ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${PROJECT_NAME}
   "")
 install(
   FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${BASE_NAME}
+    ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${PROJECT_NAME}
   DESTINATION share/ament_index/resource_index/packages)

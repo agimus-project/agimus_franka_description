@@ -6,8 +6,8 @@
               internal_filter_rate:=^|0
               use_hardware_biasing:=^|true
               ft_sensor_frame_name:=''">
-      
-    
+
+
     <ros2_control name="ati_mini45" type="sensor">
       <hardware>
         <plugin>net_ft_driver/NetFtHardwareInterface</plugin>

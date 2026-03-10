@@ -51,7 +51,9 @@ def urdf_generation(
 ):
     """Generate URDF file and save it."""
     xacro_file = os.path.join(package_path, xacro_file)
-    urdf_file = convert_xacro_to_urdf(xacro_file, ONLY_EE, WITH_SC, EE, HAND, NO_PREFIX, robot)
+    urdf_file = convert_xacro_to_urdf(
+        xacro_file, ONLY_EE, WITH_SC, EE, HAND, NO_PREFIX, robot
+    )
     if ABSOLUTE_PATHS and (HOST_DIR is None or HOST_DIR == ""):
         urdf_file = convert_package_name_to_absolute_path(
             package_name, package_path, urdf_file
@@ -96,7 +98,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "robot_model",
         type=str,
-        nargs='?',
+        nargs="?",
         default="",
         help="id of the robot model (accepted values are: {})".format(robots_str),
     )
@@ -147,10 +149,14 @@ if __name__ == "__main__":
     ABSOLUTE_PATHS = args.abs_path if args.abs_path is not None else False
     HOST_DIR = args.host_dir
     ONLY_EE = args.only_ee if args.only_ee is not None else False
-    NO_PREFIX = args.no_prefix if args.no_prefix is not None else 'false'
+    NO_PREFIX = args.no_prefix if args.no_prefix is not None else "false"
 
-    assert ROBOT_MODEL in ROBOTS or ROBOT_MODEL == "all" or \
-           ROBOT_MODEL == "none" or ROBOT_MODEL == ""
+    assert (
+        ROBOT_MODEL in ROBOTS
+        or ROBOT_MODEL == "all"
+        or ROBOT_MODEL == "none"
+        or ROBOT_MODEL == ""
+    )
 
     if ROBOT_MODEL != "all" and ROBOT_MODEL != "none":
         ROBOTS = [ROBOT_MODEL]
@@ -165,8 +171,15 @@ if __name__ == "__main__":
         else:
             robot_prefix = ROBOT_MODEL
         urdf_generation(
-            package_path, xacro_file, file_name, ONLY_EE, WITH_SC,
-            EE, HAND, NO_PREFIX, robot_prefix,
+            package_path,
+            xacro_file,
+            file_name,
+            ONLY_EE,
+            WITH_SC,
+            EE,
+            HAND,
+            NO_PREFIX,
+            robot_prefix,
         )
     else:
         if ROBOT_MODEL == "none" or ROBOT_MODEL == "":
@@ -186,6 +199,13 @@ if __name__ == "__main__":
                     print(f"\n*** Creating URDF for {robot} ***")
                     file_name = f"{robot}"
                 urdf_generation(
-                    package_path, xacro_file, file_name,
-                    ONLY_EE, WITH_SC, EE, HAND, NO_PREFIX, robot,
+                    package_path,
+                    xacro_file,
+                    file_name,
+                    ONLY_EE,
+                    WITH_SC,
+                    EE,
+                    HAND,
+                    NO_PREFIX,
+                    robot,
                 )

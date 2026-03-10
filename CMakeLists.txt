@@ -1,22 +1,21 @@
-#  Copyright (c) 2023 Franka Robotics GmbH
+# Copyright (c) 2023 Franka Robotics GmbH
 #
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
 
 cmake_minimum_required(VERSION 3.22)
 set(BASE_NAME franka_description)
 project(agimus_${BASE_NAME})
 find_package(ament_cmake REQUIRED)
-
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -28,10 +27,8 @@ if(BUILD_TESTING)
 endif()
 
 # Install launch files.
-install(DIRECTORY
-  launch robots end_effectors meshes rviz worlds
-  DESTINATION share/${BASE_NAME}/
-)
+install(DIRECTORY launch robots end_effectors meshes rviz worlds
+        DESTINATION share/${BASE_NAME}/)
 
 ament_environment_hooks(
   "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${BASE_NAME}.sh.in")
@@ -41,10 +38,8 @@ ament_package()
 file(
   WRITE
   ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${BASE_NAME}
-  ""
-)
+  "")
 install(
   FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${BASE_NAME}
-  DESTINATION share/ament_index/resource_index/packages
-)
+    ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${BASE_NAME}
+  DESTINATION share/ament_index/resource_index/packages)

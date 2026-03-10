@@ -27,14 +27,15 @@ def robot_state_publisher_spawner(context: LaunchContext, arm_id, load_gripper, 
     arm_id_str = context.perform_substitution(arm_id)
     load_gripper_str = context.perform_substitution(load_gripper)
     ee_id_str = context.perform_substitution(ee_id)
-    franka_xacro_filepath = os.path.join(
-        get_package_share_directory("franka_description"),
+    agimus_franka_xacro_filepath = os.path.join(
+        get_package_share_directory("agimus_franka_description"),
         "robots",
         arm_id_str,
         arm_id_str + ".urdf.xacro",
     )
     robot_description = xacro.process_file(
-        franka_xacro_filepath, mappings={"hand": load_gripper_str, "ee_id": ee_id_str}
+        agimus_franka_xacro_filepath,
+        mappings={"hand": load_gripper_str, "ee_id": ee_id_str},
     ).toprettyxml(indent="  ")
 
     return [
@@ -59,9 +60,9 @@ def generate_launch_description():
     arm_id = LaunchConfiguration(arm_id_parameter_name)
 
     rviz_file = os.path.join(
-        get_package_share_directory("franka_description"),
+        get_package_share_directory("agimus_franka_description"),
         "rviz",
-        "visualize_franka.rviz",
+        "visualize_agimus_franka.rviz",
     )
 
     robot_state_publisher_spawner_opaque_function = OpaqueFunction(
@@ -73,14 +74,14 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 load_gripper_parameter_name,
                 default_value="true",
-                description="Use end-effector if true. Default value is franka hand. "
+                description="Use end-effector if true. Default value is agimus_franka hand. "
                 "Robot is loaded without end-effector otherwise",
             ),
             DeclareLaunchArgument(
                 ee_id_parameter_name,
-                default_value="franka_hand",
+                default_value="agimus_franka_hand",
                 description="ID of the type of end-effector used. Supporter values: "
-                "none, franka_hand, cobot_pump",
+                "none, agimus_franka_hand, cobot_pump",
             ),
             DeclareLaunchArgument(
                 arm_id_parameter_name,

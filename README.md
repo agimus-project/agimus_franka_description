@@ -1,4 +1,6 @@
-# Franka Description
+# Agimus Franka Description
+
+This is a fork of https://github.com/frankarobotics/libfranka-common for franka robots not maintained anymore by franka.
 
 ## Overview
 
@@ -28,14 +30,14 @@ The urdf generation is performed by the create_urdf.py script which offers sever
 ```
 usage: create_urdf.py [-h] [--robot-ee] [--no-ee] [--with-sc] [--abs-path] [--host-dir HOST_DIR] [--only-ee] [--no-prefix] robot_model
 
-Generate franka robots urdf models. Script to be executed from franka_description root folder!
+Generate agimus_franka robots urdf models. Script to be executed from agimus_franka_description root folder!
 
 positional arguments:
   robot_model          id of the robot model (accepted values are: fr3, fp3, fer, multi_arm, none)
 
 optional arguments:
   -h, --help           show this help message and exit
-  --robot-ee           id of the robot end effector (accepted values are: franka_hand, cobot_pump)
+  --robot-ee           id of the robot end effector (accepted values are: agimus_franka_hand, cobot_pump)
   --no-ee              Disable loading of end-effector (robot-ee would be ingnored if set) [WARNING: this argument will be removed in future releases, introducing "none" as ee id].
   --with-sc            Include self-collision volumes in the urdf model.
   --abs-path           Use absolute paths.
@@ -46,18 +48,18 @@ optional arguments:
 
 ### Visualize via ROS2
 
-`franka_description` is offered as a ROS2 package.
+`agimus_franka_description` is offered as a ROS2 package.
 The urdf file can be visualized via RViz with the following command:
 
 ```
-# visualize_franka.sh launches the visualize_franka.launch.py in a ros2 instance running in the docker container
+# visualize_agimus_franka.sh launches the visualize_agimus_franka.launch.py in a ros2 instance running in the docker container
 # The arguments given to the .sh script are forwarded as launch arguments
 # Accepted launch arguments are:
 #     arm_id - accepted values are: fr3, fp3, fer
-#     load_gripper - accepted values are: true (default ee_id is franka_hand), false (ee_id will be ignored) [WARNING: this argument will be removed in future releases, introducing "none" as ee id]
-#     ee_id - accepted values are: franka_hand, cobot_pump
+#     load_gripper - accepted values are: true (default ee_id is agimus_franka_hand), false (ee_id will be ignored) [WARNING: this argument will be removed in future releases, introducing "none" as ee id]
+#     ee_id - accepted values are: agimus_franka_hand, cobot_pump
 
-./scripts/visualize_franka.sh arm_id:=<robot_id>
+./scripts/visualize_agimus_franka.sh arm_id:=<robot_id>
 
 ```
 

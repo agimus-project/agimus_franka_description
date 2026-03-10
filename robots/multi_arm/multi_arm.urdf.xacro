@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="multi_arm">
 
-  <xacro:include filename="$(find franka_description)/robots/common/franka_robot.xacro"/>
+  <xacro:include filename="$(find agimus_franka_description)/robots/common/agimus_franka_robot.xacro"/>
 
   <!--
     DEPRECATION NOTICE
@@ -28,7 +28,7 @@
   <xacro:arg name="hand" default="true" />
 
   <!-- Which end-effector would be mounted at the flange?" -->
-  <xacro:arg name="ee_id" default="franka_hand" />
+  <xacro:arg name="ee_id" default="agimus_franka_hand" />
 
   <!-- Should self-collision be enabled? -->
   <xacro:arg name="with_sc" default="false" />
@@ -72,11 +72,11 @@
         <origin rpy="${rpy_list[i]}" xyz="${xyz_list[i]}"/>
       </joint>
       <xacro:property name="arm_id_i" value="${arm_ids_list[i]}"/>
-      <xacro:arg name="inertials_path" default="$(find franka_description)/robots/${arm_id_i}/inertials.yaml"/>
-      <xacro:arg name="kinematics_path" default="$(find franka_description)/robots/${arm_id_i}/kinematics.yaml"/>
-      <xacro:arg name="dynamics_path" default="$(find franka_description)/robots/${arm_id_i}/dynamics.yaml"/>
-      <xacro:arg name="joint_limits_path" default="$(find franka_description)/robots/${arm_id_i}/joint_limits.yaml"/>
-      <xacro:franka_robot arm_id="${arm_id_i}"
+      <xacro:arg name="inertials_path" default="$(find agimus_franka_description)/robots/${arm_id_i}/inertials.yaml"/>
+      <xacro:arg name="kinematics_path" default="$(find agimus_franka_description)/robots/${arm_id_i}/kinematics.yaml"/>
+      <xacro:arg name="dynamics_path" default="$(find agimus_franka_description)/robots/${arm_id_i}/dynamics.yaml"/>
+      <xacro:arg name="joint_limits_path" default="$(find agimus_franka_description)/robots/${arm_id_i}/joint_limits.yaml"/>
+      <xacro:agimus_franka_robot arm_id="${arm_id_i}"
                           joint_limits="${xacro.load_yaml('$(arg joint_limits_path)')}"
                           inertials="${xacro.load_yaml('$(arg inertials_path)')}"
                           kinematics="${xacro.load_yaml('$(arg kinematics_path)')}"
@@ -94,7 +94,7 @@
                           arm_prefix= "${arm_prefixes_list[i]}"
                           connected_to="${arm_prefixes_list[i]}_base"
                           multi_arm="$(arg multi_arm)">
-      </xacro:franka_robot>
+      </xacro:agimus_franka_robot>
       <xacro:loop i="${i+1}"/>
     </xacro:unless>
   </xacro:macro>

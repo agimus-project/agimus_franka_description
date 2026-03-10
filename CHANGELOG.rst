@@ -1,6 +1,7 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package franka_description
+Changelog for package agimus_franka_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* fork to agimus_franka_description
 0.4.0 (2024-12-11)
 ------------------
 * feature: no prefix option added

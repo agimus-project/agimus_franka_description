@@ -19,33 +19,26 @@
         imports = [
           inputs.gazebros2nix.flakeModule
           {
-            gazebros2nix.rosPackages = {
-              agimus-franka-description = _final: _ros-final: {
-                src = lib.fileset.toSource {
-                  root = ./.;
-                  fileset = lib.fileset.unions [
-                    ./CMakeLists.txt
-                    ./end_effectors
-                    ./env-hooks
-                    ./launch
-                    ./meshes
-                    ./package.xml
-                    ./robots
-                    ./rviz
-                    ./scripts
-                    ./test
-                    ./worlds
-                  ];
-                };
+            gazebros2nix.rosOverrides.agimus-franka-description = _final: _ros-final: {
+              src = lib.fileset.toSource {
+                root = ./.;
+                fileset = lib.fileset.unions [
+                  ./CMakeLists.txt
+                  ./end_effectors
+                  ./env-hooks
+                  ./launch
+                  ./meshes
+                  ./package.xml
+                  ./robots
+                  ./rviz
+                  ./scripts
+                  ./test
+                  ./worlds
+                ];
               };
             };
           }
         ];
-        perSystem =
-          { self', ... }:
-          {
-            packages.default = self'.packages.ros-rolling-agimus-franka-description;
-          };
       }
     );
 }

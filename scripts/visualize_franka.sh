@@ -5,7 +5,7 @@ docker build -t urdf_creation \
     --build-arg USER_GID=$(id -g) \
     ./.docker
 
-echo 
+echo
 
 docker run -it -u $(id -u) \
     --privileged \

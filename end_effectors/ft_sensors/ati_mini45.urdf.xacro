@@ -56,7 +56,7 @@
       <child link="${measurement_frame_name}" />
       <origin xyz="0 0 ${length / 2}" rpy="${pi} 0.0 ${pi / 3 * 2}" />
     </joint>
-    
+
     <link name="${measurement_frame_name}" />
 
     <joint name="${prefix}ati_mini45_tool_mount_joint" type="fixed">

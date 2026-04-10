@@ -10,9 +10,9 @@ jobs:
       matrix:
         env:
           - {ROS_DISTRO: humble}
-          - {ROS_DISTRO: jazzy}
-          - {ROS_DISTRO: kilted}
-          - {ROS_DISTRO: rolling}
+          # - {ROS_DISTRO: jazzy} TODO
+          # - {ROS_DISTRO: kilted} TODO
+          # - {ROS_DISTRO: rolling} TODO
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

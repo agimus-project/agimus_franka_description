@@ -5,7 +5,7 @@ docker build -t urdf_creation \
     --build-arg USER_GID=$(id -g) \
     ./.docker
 
-echo 
+echo
 
 docker run -u $(id -u) \
     -v $(pwd):/workspaces/src/franka_description \

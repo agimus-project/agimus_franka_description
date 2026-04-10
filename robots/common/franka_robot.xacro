@@ -52,7 +52,7 @@
       <xacro:if value="${hand and 'ati_mini45' not in ee_id}">
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45.urdf.xacro" />
         <xacro:include filename="$(find franka_description)/end_effectors/ft_sensors/ati_mini45_arguments.xacro" />
-        <xacro:ati_mini45 
+        <xacro:ati_mini45
           parent_link="${arm_id}_link8"
           prefix="${arm_prefix_modified}"
           ip_address="$(arg ft_sensor_ip)"
@@ -115,7 +115,7 @@
           internal_filter_rate="$(arg internal_filter_rate)"
           use_hardware_biasing="$(arg use_hardware_biasing)"
           sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/$(arg ee_id)/inertials.yaml')}"
-          measurement_frame_name="${ft_sensor_measurement_frame_name}" 
+          measurement_frame_name="${ft_sensor_measurement_frame_name}"
           with_sc="${with_sc}" />
     </xacro:if>
 
@@ -135,7 +135,7 @@
           internal_filter_rate="$(arg internal_filter_rate)"
           use_hardware_biasing="$(arg use_hardware_biasing)"
           sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/$(arg ee_id)/inertials.yaml')}"
-          measurement_frame_name="${ft_sensor_measurement_frame_name}" 
+          measurement_frame_name="${ft_sensor_measurement_frame_name}"
           with_sc="${with_sc}" />
     </xacro:if>
 
@@ -155,7 +155,7 @@
           internal_filter_rate="$(arg internal_filter_rate)"
           use_hardware_biasing="$(arg use_hardware_biasing)"
           sensor_inertials="${xacro.load_yaml('$(find franka_description)/end_effectors/$(arg ee_id)/inertials.yaml')}"
-          measurement_frame_name="${ft_sensor_measurement_frame_name}" 
+          measurement_frame_name="${ft_sensor_measurement_frame_name}"
           with_sc="${with_sc}" />
     </xacro:if>
 

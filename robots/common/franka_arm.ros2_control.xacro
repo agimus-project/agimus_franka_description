@@ -15,7 +15,7 @@
              use_ft_sensor:=^|false
              ft_sensor_frame_name:=''
              initial_joint_position:='0.0 -0.78 0.0 -2.35 0.0 1.57 0.78 0.0'">
-             
+
     <xacro:property name="arm_prefix_modified" value="${'' if arm_prefix == '' else arm_prefix + '_'}" />
     <ros2_control name="${arm_prefix_modified}FrankaHardwareInterface" type="system">
         <hardware>
@@ -118,7 +118,7 @@
       <gazebo>
         <plugin filename="franka_ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
            <xacro:if value="${franka_controllers_params == ''}">
-              <parameters>$(find franka_gazebo_bringup)/config/franka_gazebo_controllers.yaml</parameters>            
+              <parameters>$(find franka_gazebo_bringup)/config/franka_gazebo_controllers.yaml</parameters>
            </xacro:if>
            <xacro:unless value="${franka_controllers_params == ''}">
                <parameters>${franka_controllers_params}</parameters>
@@ -138,7 +138,7 @@
 
       <plugin filename="ignition-gazebo-forcetorque-system" name="ignition::gazebo::systems::ForceTorque" />
 
-      
+
       <!-- For now ft-sensor in gazebo doesn't seem to work. Even though the syntax for the sensor seems to match-->
       <!-- what can be found in unit tests of the Gazebo and sensor is registered in the UI of Gazebo. -->
       <gazebo reference="${ft_sensor_frame_name}_joint">
@@ -165,12 +165,12 @@
               <!-- Nm -->
               <x><xacro:gauss_noise stddev="0.00167"/></x>
               <y><xacro:gauss_noise stddev="0.00096"/></y>
-              <z><xacro:gauss_noise stddev="0.00267"/></z>            
+              <z><xacro:gauss_noise stddev="0.00267"/></z>
             </torque>
           </force_torque>
         </sensor>
       </gazebo>
-      
+
     </xacro:if>
 
   </xacro:macro>

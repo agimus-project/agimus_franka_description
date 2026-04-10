@@ -57,7 +57,7 @@ The urdf file can be visualized via RViz with the following command:
 #     load_gripper - accepted values are: true (default ee_id is franka_hand), false (ee_id will be ignored) [WARNING: this argument will be removed in future releases, introducing "none" as ee id]
 #     ee_id - accepted values are: franka_hand, cobot_pump
 
-./scripts/visualize_franka.sh arm_id:=<robot_id> 
+./scripts/visualize_franka.sh arm_id:=<robot_id>
 
 ```
 

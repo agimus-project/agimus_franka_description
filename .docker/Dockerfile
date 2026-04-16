@@ -14,7 +14,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && mkdir -p -m 0700 /run/user/"${USER_UID}"/gdm \
     && chown user:user /run/user/"${USER_UID}" \
     && chown user:user /workspaces \
-    && chown user:user /run/user/"${USER_UID}"/gdm 
+    && chown user:user /run/user/"${USER_UID}"/gdm
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
